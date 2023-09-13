@@ -1,81 +1,75 @@
 #include <iostream>
 #include <math.h>
+#define M_PI 3.14159265358979323846
 
 class Vector {
 private:
-	double beginX;
 
-	double beginY;
+	double x;
 
-	double beginZ;
+	double y;
 
-	double endX;
+	double z;
 
-	double endY;
-
-	double endZ;
-
-	double coordinates(double end, double begin) {
-		return end - begin;
-	}
 
 public:
 	Vector() {
+		x = 0;
+
+		y = 0;
+
+		z = 0;
+
 		std::cout << "Null-vector has been created" << std::endl;
 	}
 
-	Vector(double beginX, double beginY, double beginZ,
-		double endX, double endY, double endZ) {
+	Vector(double x, double y, double z) {
 
-		this->beginX = beginX;
-		this->beginY = beginY;
-		this->beginZ = beginZ;
+		this->x = x;
 
-		this->endX = endX;
-		this->endY = endY;
-		this->endZ = endZ;
+		this->y = y;
+
+		this->z = z;
 
 		std::cout << "Vector has been created" << std::endl;
 	}
 
 	double module() {
 
-		return sqrt(pow((endZ - beginZ), 2)
-			+ pow((endY - beginY), 2)
-			+ pow((endX - beginZ), 2));
+		return sqrt(pow(x, 2)
+			+ pow(y, 2)
+			+ pow(z, 2));
 	}
 
 	void copyOf(Vector vector) {
-		beginX = vector.getBeginX();
-		beginY = vector.getBeginY();
-		beginZ = vector.getBeginZ();
-
-		endX = vector.getEndX();
-		endY = vector.getEndY();
-		endZ = vector.getEndZ();
+		x = vector.getX();
+		y = vector.getY();
+		z = vector.getZ();
 
 	}
 
 	void multByScal(double a) {
-		beginX *= a;
-		beginY *= a;
-		beginZ *= a;
+		
+		x *= a;
 
-		endX *= a;
-		endY *= a;
-		endZ *= a;
+		y *= a;
+		
+		z *= a;
 	}
 
 	void normalize() {
 		double module = this->module();
 
-		beginX /= module;
-		beginY /= module;
-		beginZ /= module;
+		x /= module;
+		y /= module;
+		z /= module;
 
-		endX /= module;
-		endY /= module;
-		endZ /= module;
+	}
+
+	void printXYZ() {
+		std::cout << "X is "<< x << std::endl;
+		std::cout << "Y is " << y << std::endl;
+		std::cout << "Z is " << x << std::endl;
 	}
 
 
@@ -84,111 +78,116 @@ public:
 		std::cout << "Vector has been deleted" << std::endl;
 	}
 
-	double getBeginX() {
-		return beginX;
+	double getX() {
+		return x;
 	}
 
-	double getBeginY() {
-		return beginY;
+	double getY() {
+		return y;
 	}
 
-	double getBeginZ() {
-		return beginZ;
+	double getZ() {
+		return z;
 	}
 
-	double getEndX() {
-		return endX;
+	void setX(double x) {
+		this->x = x;
 	}
 
-	double getEndY() {
-		return endY;
+	void setY(double y) {
+		this->y = y;
 	}
 
-	double getEndZ() {
-		return endZ;
-	}
-
-	void setBeginX(double beginX) {
-		this->beginX = beginX;
-	}
-
-	void setBeginY(double beginY) {
-		this->beginY = beginY;
-	}
-
-	void setBeginZ(double beginY) {
-		this->beginZ = beginZ;
-	}
-
-	void setEndX(double endX) {
-		this->endX = endX;
-	}
-
-	void setEndY(double endY) {
-		this->endY = endY;
-	}
-
-	void setEndZ(double endZ) {
-		this->endZ = endZ;
+	void setZ(double Z) {
+		this->z = z;
 	}
 };
 
-Vector sumVector(Vector v1, Vector v2) {
-	Vector c(v1.getBeginX() + v2.getBeginX(),
-		v1.getBeginY() + v2.getBeginY(),
-		v1.getBeginZ() + v2.getBeginZ(),
-		v1.getEndX() + v2.getEndX(),
-		v1.getEndY() + v2.getEndY(),
-		v1.getEndZ() + v2.getEndZ()
-	);
-
-	return c;
-}
-Vector substractVector(Vector v1, Vector v2) {
-	Vector c(v1.getBeginX()  - v2.getBeginX(),
-		v1.getBeginY() - v2.getBeginY(),
-		v1.getBeginZ() - v2.getBeginZ(),
-		v1.getEndX() - v2.getEndX(),
-		v1.getEndY() - v2.getEndY(),
-		v1.getEndZ() - v2.getEndZ()
-	);
-
-	return c;
-}
-
-double multVector(Vector v1, Vector v2) {
+Vector  sumVector(Vector v1, Vector v2) {
 	
-	double a1 = v1.getEndX() - v1.getBeginZ();
-	double a2 = v1.getEndY() - v1.getBeginY();
-	double a3 = v1.getEndZ() - v1.getBeginZ();
+	return Vector(v1.getX() + v2.getX(),
+		v1.getY() + v2.getY(),
+		v1.getZ() + v2.getZ());
+}
 
-	double b1 = v2.getEndX() - v2.getBeginZ();
-	double b2 = v2.getEndY() - v2.getBeginY();
-	double b3 = v2.getEndZ() - v2.getBeginZ();
+Vector substractVector(Vector v1, Vector v2) {
 
+	return Vector(v1.getX() - v2.getX(),
+		v1.getY() - v2.getY(),
+		v1.getZ() - v2.getZ());
+}
 
-	return sqrt(pow((a2 * b3 - a3 * b2), 2)
-			+ pow((a3 * b1 - a1 * b3), 2)
-			+ pow((a1 * b2 - a2 * b1), 2));
+Vector multVector(Vector v1, Vector v2) {
+	
+	return Vector(v1.getY() * v2.getZ() - v1.getX() * v2.getY(),
+			v1.getZ() *  - v2.getX() * v2.getZ(),
+			v1.getX() * v2.getY() - v1.getY() * v2.getX());
 
 }
-double scalMultVector(Vector v1, Vector v2) {
+double scalMultVector(Vector v1, Vector v2) {	
+	return v1.getX()*v2.getY() + v1.getY() + v2.getY() + v1.getZ() + v2.getZ();
+}
 
+double cosineAngle(Vector v1, Vector v2) {
+
+	return scalMultVector(v1, v2) / (v1.module() * v2.module());
+
+}
+
+double sinAngle(Vector v1, Vector v2) {
+
+	return sqrt(1 - pow(cosineAngle(v1, v2), 2));
+
+}
+
+double angleInDegrees(Vector v1, Vector v2) {
+	return acos(cosineAngle(v1, v2)) * (180.0 / M_PI);
 }
 
 int main() {
 	Vector nullVector;
-	Vector vector(1.0, 2.0, 3.0, 7.0, 8.0, 9.0);
+	Vector vector(1.0, 5.0 ,7.0);
+
+
+	std::cout << "null vector x:" << nullVector.getX() << std::endl;
 
 	std::cout << "vector moudle:" << vector.module() << std::endl;
+
 	nullVector.copyOf(vector);
 	std::cout << "vector moudle:" << nullVector.module() << std::endl;
 
 	nullVector.multByScal(3.0);
-	std::cout << "null vector x:" << nullVector.getBeginX() << std::endl;
+	std::cout << "null vector x:" << nullVector.getX() << std::endl;
 	
 	vector.normalize();
-	std::cout << "vector x:" << vector.getBeginX() << std::endl;
+	std::cout << "vector x:" << vector.getX() << std::endl;
+
+	vector.printXYZ();
+	nullVector.printXYZ();
+
+
+	Vector v1(1.0, 5.0, 7.0);
+	Vector v2(-1.0, 15.0, -7.0);
+
+
+	std::cout << "vector sum result: " << std::endl;
+	sumVector(v1, v2).printXYZ();
+
+	std::cout << "vector substraction result: " << std::endl;
+	substractVector(v1, v2).printXYZ();
+
+	std::cout << "vector multiplication result: " << std::endl;
+	multVector(v1, v2).printXYZ();
+
+
+	std::cout << "vector scal multiplication result: " <<scalMultVector(v1, v2) << std::endl;
+
+	std::cout << "cos between vectors: " << cosineAngle(v1, v2) << std::endl;
+
+	std::cout << "sin between vectors: " << sinAngle(v1, v2) << std::endl;
+
+	std::cout << "Angele in degrees between vectors: " << angleInDegrees(v1, v2) << std::endl;
+
 
 
 
