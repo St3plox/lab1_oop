@@ -1,29 +1,24 @@
 #include <iostream>
 #include <math.h>
+#include "Vector.h"
+using namespace VectorNamespace;
 #define M_PI 3.14159265358979323846
 
-class Vector {
-private:
 
 	double x;
-
 	double y;
-
 	double z;
 
+	Vector::Vector() {
 
-public:
-	Vector() {
 		x = 0;
-
 		y = 0;
-
 		z = 0;
 
 		std::cout << "Null-vector has been created" << std::endl;
 	}
 
-	Vector(double x, double y, double z) {
+	Vector::Vector(double x, double y, double z) {
 
 		this->x = x;
 
@@ -34,76 +29,88 @@ public:
 		std::cout << "Vector has been created" << std::endl;
 	}
 
-	double module() {
+
+	Vector::~Vector() {
+		std::cout << "Vector has been deleted" << std::endl;
+	}
+
+	Vector::Vector(const Vector& other) {
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		std::cout << "Copy constructor called" << std::endl;
+	}
+
+	Vector::Vector(Vector&& other) noexcept {
+		x = std::move(other.x); 
+		y = std::move(other.y);
+		z = std::move(other.z);
+		std::cout << "Move constructor called" << std::endl;
+	}
+
+	double Vector::module() {
 
 		return sqrt(pow(x, 2)
 			+ pow(y, 2)
 			+ pow(z, 2));
 	}
 
-	void copyOf(Vector vector) {
+	void Vector::copyOf(VectorNamespace::Vector vector) {
+
 		x = vector.getX();
 		y = vector.getY();
 		z = vector.getZ();
 
 	}
 
-	void multByScal(double a) {
+	void Vector::multByScal(double a) {
 		
 		x *= a;
-
 		y *= a;
-		
 		z *= a;
 	}
 
-	void normalize() {
+	void VectorNamespace::Vector::normalize() {
+
 		double module = this->module();
 
 		x /= module;
 		y /= module;
 		z /= module;
-
 	}
 
-	void printXYZ() {
+	void Vector::printXYZ() {
+
 		std::cout << "X is "<< x << std::endl;
 		std::cout << "Y is " << y << std::endl;
 		std::cout << "Z is " << x << std::endl;
 	}
 
-
-
-	~Vector() {
-		std::cout << "Vector has been deleted" << std::endl;
-	}
-
-	double getX() {
+	double Vector::getX() {
 		return x;
 	}
 
-	double getY() {
+	double Vector::getY() {
 		return y;
 	}
 
-	double getZ() {
+	double Vector::getZ() {
 		return z;
 	}
 
-	void setX(double x) {
+	void Vector::setX(double x) {
 		this->x = x;
 	}
 
-	void setY(double y) {
+	void Vector::setY(double y) {
 		this->y = y;
 	}
 
-	void setZ(double Z) {
+	void Vector::setZ(double z) {
 		this->z = z;
 	}
-};
 
-Vector  sumVector(Vector v1, Vector v2) {
+	Vector sumVector(Vector v1, Vector v2) {
 	
 	return Vector(v1.getX() + v2.getX(),
 		v1.getY() + v2.getY(),
@@ -124,7 +131,7 @@ Vector multVector(Vector v1, Vector v2) {
 			v1.getX() * v2.getY() - v1.getY() * v2.getX());
 
 }
-double scalMultVector(Vector v1, Vector v2) {	
+double scalMultVector(Vector v1, Vector v2) {
 	return v1.getX()*v2.getY() + v1.getY() + v2.getY() + v1.getZ() + v2.getZ();
 }
 
@@ -134,62 +141,12 @@ double cosineAngle(Vector v1, Vector v2) {
 
 }
 
-double sinAngle(Vector v1, Vector v2) {
+ double sinAngle(Vector v1, Vector v2) {
 
 	return sqrt(1 - pow(cosineAngle(v1, v2), 2));
-
 }
 
 double angleInDegrees(Vector v1, Vector v2) {
+
 	return acos(cosineAngle(v1, v2)) * (180.0 / M_PI);
-}
-
-int main() {
-	Vector nullVector;
-	Vector vector(1.0, 5.0 ,7.0);
-
-
-	std::cout << "null vector x:" << nullVector.getX() << std::endl;
-
-	std::cout << "vector moudle:" << vector.module() << std::endl;
-
-	nullVector.copyOf(vector);
-	std::cout << "vector moudle:" << nullVector.module() << std::endl;
-
-	nullVector.multByScal(3.0);
-	std::cout << "null vector x:" << nullVector.getX() << std::endl;
-	
-	vector.normalize();
-	std::cout << "vector x:" << vector.getX() << std::endl;
-
-	vector.printXYZ();
-	nullVector.printXYZ();
-
-
-	Vector v1(1.0, 5.0, 7.0);
-	Vector v2(-1.0, 15.0, -7.0);
-
-
-	std::cout << "vector sum result: " << std::endl;
-	sumVector(v1, v2).printXYZ();
-
-	std::cout << "vector substraction result: " << std::endl;
-	substractVector(v1, v2).printXYZ();
-
-	std::cout << "vector multiplication result: " << std::endl;
-	multVector(v1, v2).printXYZ();
-
-
-	std::cout << "vector scal multiplication result: " <<scalMultVector(v1, v2) << std::endl;
-
-	std::cout << "cos between vectors: " << cosineAngle(v1, v2) << std::endl;
-
-	std::cout << "sin between vectors: " << sinAngle(v1, v2) << std::endl;
-
-	std::cout << "Angele in degrees between vectors: " << angleInDegrees(v1, v2) << std::endl;
-
-
-
-
-	return 0;
 }
