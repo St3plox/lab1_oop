@@ -5,9 +5,6 @@ using namespace VectorNamespace;
 #define M_PI 3.14159265358979323846
 
 
-	double x;
-	double y;
-	double z;
 
 	Vector::Vector() {
 
@@ -70,7 +67,7 @@ using namespace VectorNamespace;
 		z *= a;
 	}
 
-	void VectorNamespace::Vector::normalize() {
+	void Vector::normalize() {
 
 		double module = this->module();
 
@@ -109,44 +106,3 @@ using namespace VectorNamespace;
 	void Vector::setZ(double z) {
 		this->z = z;
 	}
-
-	Vector sumVector(Vector v1, Vector v2) {
-	
-	return Vector(v1.getX() + v2.getX(),
-		v1.getY() + v2.getY(),
-		v1.getZ() + v2.getZ());
-}
-
-Vector substractVector(Vector v1, Vector v2) {
-
-	return Vector(v1.getX() - v2.getX(),
-		v1.getY() - v2.getY(),
-		v1.getZ() - v2.getZ());
-}
-
-Vector multVector(Vector v1, Vector v2) {
-	
-	return Vector(v1.getY() * v2.getZ() - v1.getX() * v2.getY(),
-			v1.getZ() *  - v2.getX() * v2.getZ(),
-			v1.getX() * v2.getY() - v1.getY() * v2.getX());
-
-}
-double scalMultVector(Vector v1, Vector v2) {
-	return v1.getX()*v2.getY() + v1.getY() + v2.getY() + v1.getZ() + v2.getZ();
-}
-
-double cosineAngle(Vector v1, Vector v2) {
-
-	return scalMultVector(v1, v2) / (v1.module() * v2.module());
-
-}
-
- double sinAngle(Vector v1, Vector v2) {
-
-	return sqrt(1 - pow(cosineAngle(v1, v2), 2));
-}
-
-double angleInDegrees(Vector v1, Vector v2) {
-
-	return acos(cosineAngle(v1, v2)) * (180.0 / M_PI);
-}

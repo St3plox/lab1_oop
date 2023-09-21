@@ -29,17 +29,4 @@ namespace VectorNamespace {
         void setY(double y);
         void setZ(double z);
     };
-    Vector sumVector(Vector v1, VectorNamespace::Vector v2);
-
-    Vector substractVector(Vector v1, Vector v2);
-
-    Vector multVector(Vector v1, Vector v2);
-
-    double scalMultVector(Vector v1, Vector v2);
-
-    double cosineAngle(Vector v1, Vector v2);
-
-    double sinAngle(Vector v1, Vector v2);
-
-    double angleInDegrees(Vector v1, Vector v2);
 }
